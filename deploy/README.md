@@ -488,3 +488,60 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 **🚀 Happy Deploying! Container-ready production system.**
+
+# Deployment Configuration
+
+Production deployment files for Sistem Absensi Manufac.id
+
+## 🚀 Quick Deploy
+
+### Auto Deploy (Recommended)
+
+```bash
+# Push to trigger auto-deploy
+git add .
+git commit -m "Deploy changes"
+git push origin main
+```
+
+### Manual Deploy
+
+```bash
+# Build production package
+../scripts/deploy-git-simple.bat
+
+# Upload deploy-temp/ contents to Hostinger public_html
+```
+
+## 📁 Files Overview
+
+- `DEPLOYMENT-GUIDE.md` - Complete deployment instructions
+- `exclude.txt` - Files to exclude from production build
+- `.htaccess-*` - Apache configuration files
+- `docker-*.yml` - Docker deployment configurations
+- `Dockerfile.*` - Container build instructions
+
+## 🌐 Production URLs
+
+- **Website**: https://manufac.id
+- **API**: https://manufac.id/api/
+- **Webhook**: `https://webhooks.hostinger.com/deploy/7f59fddf8be7857f24d3de0010477ddf`
+
+## ⚡ Auto-Deploy Status
+
+- ✅ GitHub repository configured
+- ✅ Hostinger webhook active
+- ✅ Build script working
+- ✅ Production environment ready
+
+## 🔧 Manual Fixes
+
+If deployment issues occur:
+
+1. **Run fix script**: `../scripts/fix-permissions.bat`
+2. **Check logs**: Hostinger hPanel → Git
+3. **Verify files**: Ensure .htaccess exists in root and api/
+
+---
+
+Ready for production deployment! 🚀

@@ -1,15 +1,26 @@
 # Dependencies
 node_modules/
 vendor/
+frontend-web/node_modules/
+backend-api/vendor/
 
 # Environment files
 .env
 .env.local
+.env.production
 .env.*.local
+backend-api/.env
 
 # Build outputs
 dist/
 build/
+dist-production/
+deploy-temp/
+frontend-web/dist/
+
+# Deployment packages
+*.zip
+deploy-temp.zip
 
 # Logs
 *.log

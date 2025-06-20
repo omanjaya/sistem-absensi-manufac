@@ -1,137 +1,241 @@
-# 🚀 Sistem Absensi Berbasis Pengenalan Wajah
+# Sistem Absensi Manufac.id
 
-Sistem absensi karyawan modern dengan teknologi face recognition, GPS validation, dan manajemen penggajian terintegrasi.
+Modern attendance management system dengan fitur face recognition, Excel import/export, dan real-time dashboard.
 
-## 🏗️ Arsitektur
+## 🌐 Production URLs
+
+- **Website**: https://manufac.id
+- **API**: https://manufac.id/api/
+- **Repository**: https://github.com/omanjaya/sistem-absensi-manufac
+
+## 🚀 Features
+
+- ✅ **Employee Management** - CRUD dan Excel import/export
+- ✅ **Face Recognition** - Attendance via camera
+- ✅ **Real-time Dashboard** - Analytics dan reporting
+- ✅ **Salary Calculation** - Automated payroll system
+- ✅ **Mobile Responsive** - Works on all devices
+- ✅ **Role-based Access** - Admin, Manager, Employee roles
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- **Vue.js 3** - Progressive web framework
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **Vite** - Fast build tool
+
+### Backend
+
+- **Laravel 11** - PHP web framework
+- **MySQL** - Database (Hostinger compatible)
+- **Laravel Sanctum** - API authentication
+- **Maatwebsite Excel** - Excel import/export
+
+### Face Recognition
+
+- **Python Flask** - Face recognition service
+- **OpenCV** - Computer vision library
+
+## 📦 Project Structure
 
 ```
-sistemabsensi/
-├── 📂 backend-api/        # Laravel 11 REST API Backend
-├── 📂 frontend-web/       # Vue 3 + TypeScript Frontend
-├── 📂 face-server/        # Flask AI Face Recognition
-├── 📂 deploy/             # Docker Deployment Files
-├── 📂 docs/              # Documentation
-├── 📂 scripts/           # Setup Scripts
-└── 📄 README.md          # Project Overview
+sistem-absensi-manufac/
+├── frontend-web/           # Vue.js frontend
+├── backend-api/           # Laravel backend
+├── face-server/           # Python face recognition
+├── scripts/               # Development & deployment scripts
+├── docs/                  # Documentation
+├── deploy/               # Production configuration
+├── .htaccess             # Frontend routing
+├── build.sh              # Production build script
+└── README.md             # This file
 ```
 
-## ⚡ Quick Start
+## 🏃‍♂️ Quick Start
 
-### Option 1: Automated Setup
+### Local Development
 
 ```bash
-# Windows
-scripts\setup.bat
+# 1. Clone repository
+git clone https://github.com/omanjaya/sistem-absensi-manufac.git
+cd sistem-absensi-manufac
 
-# Linux/Mac
-chmod +x scripts/setup.sh && ./scripts/setup.sh
+# 2. Start all services
+scripts\dev.bat
+
+# 3. Access applications
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:8000
+# Face Server: http://localhost:5000
 ```
 
-### Option 2: Manual Setup
+### Production Deployment
+
+**Option 1: Auto-Deploy (Recommended)**
+
+1. Setup Hostinger Git integration
+2. Configure webhook: `https://webhooks.hostinger.com/deploy/7f59fddf8be7857f24d3de0010477ddf`
+3. Push to main branch → auto-deploy
+
+**Option 2: Manual Deploy**
 
 ```bash
-# 1. Backend API (Terminal 1)
-cd backend-api
-composer install
-php artisan migrate:fresh --seed
-php artisan serve --port=8000
+# Build deployment package
+scripts\deploy-git-simple.bat
 
-# 2. AI Server (Terminal 2)
-cd face-server
-pip install -r requirements.txt
-python app.py
+# Upload deploy-temp/ to Hostinger public_html
+```
 
-# 3. Frontend (Terminal 3)
+## 🔧 Development Scripts
+
+| Script                             | Description                     |
+| ---------------------------------- | ------------------------------- |
+| `scripts\dev.bat`                  | Start local development servers |
+| `scripts\setup-git-repository.bat` | Initialize Git repository       |
+| `scripts\deploy-git-simple.bat`    | Build production package        |
+| `scripts\build-production.bat`     | Build for production            |
+| `scripts\fix-permissions.bat`      | Fix deployment issues           |
+
+## 🌍 Deployment Configuration
+
+### Database (MySQL)
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_DATABASE=u976886556_absensi
+DB_USERNAME=u976886556_omanjaya
+DB_PASSWORD=@Oman180010216
+```
+
+### Environment
+
+```env
+APP_URL=https://manufac.id
+APP_ENV=production
+APP_DEBUG=false
+```
+
+## 🔀 Git Workflow
+
+### Development
+
+```bash
+# Create feature branch
+git checkout -b feature/new-feature
+
+# Make changes
+git add .
+git commit -m "Add new feature"
+git push origin feature/new-feature
+
+# Create Pull Request
+# Merge to main → Auto-deploy
+```
+
+### Auto-Deploy
+
+1. **Push to main** → GitHub webhook triggers
+2. **Hostinger pulls** latest code
+3. **Build script runs** → `build.sh`
+4. **Website updates** → https://manufac.id
+
+## 🧪 Testing
+
+### Frontend
+
+```bash
 cd frontend-web
-npm install
-npm run dev
+npm run test
 ```
 
-### Option 3: Docker
+### Backend
 
 ```bash
-cd deploy
-docker-compose up -d
+cd backend-api
+php artisan test
 ```
 
-## 🌐 Access Points
+## 🔐 Security Features
 
-- **Frontend**: http://localhost:3000
-- **API Backend**: http://localhost:8000
-- **AI Server**: http://localhost:5000
+- ✅ **CSRF Protection** - Laravel built-in
+- ✅ **XSS Protection** - Vue.js sanitization
+- ✅ **SQL Injection Prevention** - Eloquent ORM
+- ✅ **Rate Limiting** - API throttling
+- ✅ **HTTPS Enforced** - Production only
+- ✅ **File Upload Validation** - Excel import security
 
-## 🔑 Default Login
+## 📱 Default Accounts
 
-| Role     | Email                | Password |
-| -------- | -------------------- | -------- |
-| Admin    | admin@example.com    | password |
-| Employee | employee@example.com | password |
+```
+Admin:
+Email: admin@absensi.com
+Password: password
 
-## 🎯 Key Features
+Manager:
+Email: manager@absensi.com
+Password: password
 
-✅ **Face Recognition** - Real-time attendance with AI  
-✅ **GPS Validation** - Location-based check-in/out  
-✅ **Multi-Role System** - Admin & Employee dashboards  
-✅ **Payroll Management** - Automated salary calculation  
-✅ **Leave Management** - Request & approval workflow  
-✅ **Analytics Dashboard** - Real-time statistics  
-✅ **Excel Export** - Comprehensive reporting
+Employee:
+Email: john@absensi.com
+Password: password
+```
 
-## 🛠️ Tech Stack
+## 🚨 Troubleshooting
 
-- **Frontend**: Vue 3, TypeScript, Tailwind CSS
-- **Backend**: Laravel 11, PostgreSQL, Redis
-- **AI**: Flask, face_recognition, OpenCV
-- **Deploy**: Docker, Nginx
-
-## 📚 Documentation
-
-- [`docs/QUICK-START.md`](docs/QUICK-START.md) - Detailed setup guide
-- [`docs/RUN-SYSTEM.md`](docs/RUN-SYSTEM.md) - Running instructions
-- [`docs/DEMO-RESULTS.md`](docs/DEMO-RESULTS.md) - Implementation results
-- [`docs/STRUCTURE.md`](docs/STRUCTURE.md) - Project structure guide
-- [`backend-api/README.md`](backend-api/README.md) - API documentation
-- [`frontend-web/README.md`](frontend-web/README.md) - Frontend guide
-- [`face-server/README.md`](face-server/README.md) - AI server docs
-
-## 🔧 System Requirements
-
-- **PHP**: 8.2+
-- **Node.js**: 18+
-- **Python**: 3.8+
-- **PostgreSQL**: 13+
-- **Composer**: 2.5+
-- **Docker**: 24+ (optional)
-
-## 🎮 Demo Features
-
-1. **Employee Registration** - Register face for recognition
-2. **Clock In/Out** - Face-based attendance tracking
-3. **GPS Validation** - 100m radius office location check
-4. **Dashboard Analytics** - Real-time performance metrics
-5. **Leave Requests** - Submit and approve time-off
-6. **Salary Reports** - Generate monthly payroll
-
-## 🚀 Production Deployment
-
-For production environments:
+### 403 Forbidden Error
 
 ```bash
-# Using Docker (Recommended)
-cd deploy
-docker-compose -f docker-compose.prod.yml up -d
+# Check file permissions
+chmod -R 755 api/storage
+chmod -R 755 api/bootstrap/cache
 
-# Manual Production Setup
-# See docs/QUICK-START.md for detailed instructions
+# Verify .htaccess files exist
+ls -la .htaccess api/.htaccess
+
+# Run fix script
+scripts\fix-permissions.bat
 ```
 
-## 🤝 Support
+### Build Failures
 
-- **Issues**: Create GitHub issue
-- **Documentation**: Check `/docs` folder
-- **Setup Help**: Follow `/docs/QUICK-START.md`
+```bash
+# Clear caches
+cd frontend-web && npm cache clean --force
+cd backend-api && composer clear-cache
+
+# Rebuild
+scripts\build-production.bat
+```
+
+### Database Issues
+
+```bash
+# Run migrations
+cd backend-api
+php artisan migrate --force
+php artisan db:seed
+```
+
+## 📞 Support
+
+- **Repository Issues**: https://github.com/omanjaya/sistem-absensi-manufac/issues
+- **Documentation**: See `docs/` directory
+- **Hostinger Support**: hPanel → Support
+
+## 🏆 Production Status
+
+- ✅ **Repository**: Set up and synchronized
+- ✅ **Auto-Deploy**: Configured and working
+- ✅ **Database**: MySQL ready for production
+- ✅ **SSL**: HTTPS enforced
+- ✅ **Monitoring**: Error tracking enabled
+- ✅ **Backup**: Git-based version control
 
 ---
 
-**Ready to transform your attendance management! 🎯**
-"# Test Auto Deploy - $(date)" 
+**Sistema Absensi Manufac.id - Ready for Production! 🚀**
+
+Built with ❤️ for modern workforce management.
