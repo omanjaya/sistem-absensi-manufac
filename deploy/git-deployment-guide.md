@@ -42,7 +42,7 @@ git push -u origin main
 2. **Website → Manage → Git**
 3. **Connect Repository:**
    ```
-   Repository URL: https://github.com/username/sistem-absensi-manufac
+   Repository URL: https://github.com/omanjaya/sistem-absensi-manufac
    Branch: main
    Target Directory: public_html
    ```

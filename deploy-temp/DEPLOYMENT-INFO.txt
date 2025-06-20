@@ -1,0 +1,32 @@
+Deployment Information
+=====================
+
+Project: Sistem Absensi Manufac.id
+Branch: main
+Commit: 
+Date: 20/06/2025 15:04:16,53
+
+Files Structure:
+- Root: Frontend Vue.js files (index.html, assets/)
+- /api/: Laravel backend files
+- /deployment-files/: Documentation and configs
+
+Manual Upload Steps:
+1. Login to Hostinger File Manager
+2. Navigate to manufac.id public_html folder
+3. Upload ALL files from deploy-temp\ folder
+4. Configure database in api/.env file
+5. Run database migrations via terminal or cron
+
+Database Configuration:
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_DATABASE=u976886556_absensi
+DB_USERNAME=u976886556_omanjaya
+DB_PASSWORD=@Oman180010216
+
+Test URLs after upload:
+Frontend: https://manufac.id/
+Backend API: https://manufac.id/api/
+
+Commit Hash: 774820e243e5c7f28b878011366c35475b807760

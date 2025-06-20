@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 echo ========================================
 echo    Git Deployment to Hostinger
 echo    Domain: manufac.id
@@ -6,9 +7,17 @@ echo ========================================
 
 :: Check current git status
 echo Checking Git status...
-git status --porcelain > temp_status.txt
-set /p git_changes=<temp_status.txt
-del temp_status.txt
+git status --porcelain > temp_status.txt 2>nul
+
+:: Check if temp file has content
+set git_changes=
+if exist temp_status.txt (
+    for /f %%i in ("temp_status.txt") do set file_size=%%~zi
+    if not "!file_size!"=="0" (
+        set /p git_changes=<temp_status.txt
+    )
+    del temp_status.txt
+)
 
 if not "%git_changes%"=="" (
     echo.
@@ -24,6 +33,8 @@ if not "%git_changes%"=="" (
     pause
     exit /b 1
 )
+
+echo Git working tree is clean!
 
 :: Get current branch
 for /f "tokens=*" %%i in ('git rev-parse --abbrev-ref HEAD') do set current_branch=%%i
