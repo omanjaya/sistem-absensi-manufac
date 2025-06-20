@@ -1,0 +1,112 @@
+version: "3.8"
+
+services:
+  # Laravel Backend API
+  laravel-api:
+    build:
+      context: ../backend-api
+      dockerfile: ../deploy/Dockerfile.laravel.production
+    container_name: manufac-api
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ../backend-api:/var/www/html
+      - api-storage:/var/www/html/storage
+      - api-cache:/var/www/html/bootstrap/cache
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=https://manufac.id
+      - DB_CONNECTION=mysql
+      - DB_HOST=localhost
+      - DB_PORT=3306
+      - CACHE_DRIVER=file
+      - SESSION_DRIVER=file
+      - QUEUE_CONNECTION=sync
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    networks:
+      - manufac-network
+
+  # Vue.js Frontend
+  vue-frontend:
+    build:
+      context: ../frontend-web
+      dockerfile: ../deploy/Dockerfile.vue.production
+    container_name: manufac-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+      - VITE_API_BASE_URL=https://manufac.id/api
+      - VITE_APP_URL=https://manufac.id
+    networks:
+      - manufac-network
+
+  # Face Recognition Service
+  face-service:
+    build:
+      context: ../face-server
+      dockerfile: ../deploy/Dockerfile.flask.production
+    container_name: manufac-face-service
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - face-data:/app/faces
+    environment:
+      - FLASK_ENV=production
+      - FLASK_DEBUG=false
+    networks:
+      - manufac-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: manufac-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - manufac-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: manufac-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.production.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx-logs:/var/log/nginx
+    depends_on:
+      - laravel-api
+      - vue-frontend
+      - face-service
+    networks:
+      - manufac-network
+
+volumes:
+  api-storage:
+    driver: local
+  api-cache:
+    driver: local
+  face-data:
+    driver: local
+  redis-data:
+    driver: local
+  nginx-logs:
+    driver: local
+
+networks:
+  manufac-network:
+    driver: bridge

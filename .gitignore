@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+
+# Laravel specific
+backend-api/storage/app/*
+backend-api/storage/framework/cache/*
+backend-api/storage/framework/sessions/*
+backend-api/storage/framework/views/*
+backend-api/storage/logs/*
+!backend-api/storage/app/.gitignore
+!backend-api/storage/framework/.gitignore
+!backend-api/storage/logs/.gitignore
+
+# Face recognition data
+face-server/face_data/
+face-server/__pycache__/
+*.pyc
+
+# Docker
+.docker/
+
+# Backup files
+*.bak
+*.backup 
