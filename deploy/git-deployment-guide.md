@@ -32,7 +32,7 @@ git init
 git add .
 git commit -m "Initial commit - Sistem Absensi Manufac"
 git branch -M main
-git remote add origin https://github.com/username/sistem-absensi-manufac.git
+git remote add origin https://github.com/omanjaya/absensi.git
 git push -u origin main
 ```
 
@@ -50,16 +50,19 @@ git push -u origin main
 #### **Step 3: Configure Build Commands**
 
 ```bash
-# Hostinger akan menjalankan commands ini otomatis
-# Frontend build
+# Hostinger server commands (Linux)
 cd frontend-web && npm install && npm run build:production
+cd ../backend-api && composer install --no-dev --optimize-autoloader
+cp -r ../frontend-web/dist/* ../
+cp -r ./* ../api/
+```
 
-# Backend setup
-cd backend-api && composer install --no-dev --optimize-autoloader
+**Untuk Windows Development (Local Testing):**
 
-# Copy files to correct locations
-cp -r frontend-web/dist/* ../
-cp -r backend-api/* api/
+```cmd
+:: Use Windows-compatible scripts
+scripts\setup-git-repository.bat
+scripts\deploy-git-hostinger.bat
 ```
 
 ### **Method 2: Manual Git Setup via SSH**
