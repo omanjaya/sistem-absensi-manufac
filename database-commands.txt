@@ -1,0 +1,76 @@
+# ========================================
+# DATABASE SETUP COMMANDS - Copy paste satu per satu
+# ========================================
+
+# 1. Navigate to Laravel API directory
+cd /home/u976886556/domains/manufac.id/public_html/api
+
+# 2. Check if artisan exists
+ls -la artisan
+
+# 3. Create .env file (if not exists)
+cat > .env << 'EOF'
+APP_NAME="Sistema Absensi"
+APP_ENV=production
+APP_KEY=base64:shvmMdDvW0NMDOR30dbGQ5E/6a/AxHsHVSl3CYrmCdw=
+APP_DEBUG=false
+APP_URL=https://manufac.id
+
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=u976886556_absensi
+DB_USERNAME=u976886556_omanjaya
+DB_PASSWORD=@Oman180010216
+
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+EOF
+
+# 4. Clear Laravel caches
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+
+# 5. Run database migrations
+php artisan migrate --force
+
+# 6. Seed database with default data
+php artisan db:seed --force
+
+# 7. Cache for production
+php artisan config:cache
+php artisan route:cache
+
+# 8. Set permissions
+chmod -R 755 storage/
+chmod -R 755 bootstrap/cache/
+
+# 9. Test database connection
+php artisan tinker --execute="echo App\Models\User::count() . ' users found';"
+
+# ========================================
+# MANUAL SQL COMMANDS (if Laravel fails)
+# ========================================
+
+# Login to MySQL
+mysql -h localhost -u u976886556_omanjaya -p@Oman180010216 u976886556_absensi
+
+# Create admin user manually
+INSERT INTO users (name, email, password, employee_id, role, status, email_verified_at, created_at, updated_at) 
+VALUES ('Admin', 'admin@absensi.com', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADM001', 'admin', 'active', NOW(), NOW(), NOW());
+
+# Check users
+SELECT name, email, role FROM users;
+
+# ========================================
+# DEFAULT LOGIN CREDENTIALS
+# ========================================
+
+# Admin Account:
+# Email: admin@absensi.com
+# Password: password
+
+# Test Login:
+# URL: https://manufac.id/login 
