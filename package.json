@@ -1,0 +1,40 @@
+{
+  "name": "sistem-absensi-manufac",
+  "version": "1.0.0",
+  "description": "Modern attendance management system for Manufac.id",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend-web && npm run dev",
+    "dev:backend": "cd backend-api && php artisan serve",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend-web && npm install && npm run build:production",
+    "build:backend": "cd backend-api && composer install --no-dev --optimize-autoloader",
+    "build:production": "npm run build:frontend && npm run build:backend && npm run deploy:copy",
+    "deploy:copy": "npm run copy:frontend && npm run copy:backend",
+    "copy:frontend": "cp -r frontend-web/dist/* ./ || xcopy /E /I /H /Y frontend-web\\dist\\* .\\",
+    "copy:backend": "cp -r backend-api/* api/ || xcopy /E /I /H /Y backend-api\\* api\\",
+    "test": "cd backend-api && php artisan test && cd ../frontend-web && npm run test",
+    "lint": "cd frontend-web && npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omanjaya/sistem-absensi-manufac.git"
+  },
+  "keywords": [
+    "laravel",
+    "vue",
+    "attendance",
+    "face-recognition",
+    "manufac"
+  ],
+  "author": "Omanjaya",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+} 
