@@ -50,13 +50,14 @@ const getEnvApiUrl = (service: 'laravel' | 'flask') => {
   const envVars = {
     laravel: [
       import.meta.env.VITE_LARAVEL_API_URL,
+      import.meta.env.VITE_API_BASE_URL,
       import.meta.env.VITE_API_URL,
       import.meta.env.VITE_BACKEND_URL
     ],
     flask: [
       import.meta.env.VITE_FLASK_API_URL,
-      import.meta.env.VITE_AI_URL,
-      import.meta.env.VITE_FACE_API_URL
+      import.meta.env.VITE_FACE_API_URL,
+      import.meta.env.VITE_AI_URL
     ]
   }
   
@@ -73,10 +74,16 @@ export const getLaravelApiUrl = (): string => {
     return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`
   }
   
-  // 2. Generate berdasarkan current environment
+  // 2. Deteksi production vs development
   const protocol = window.location.protocol
   const hostname = window.location.hostname || 'localhost'
   
+  // Production detection
+  if (hostname === 'manufac.id' || hostname === 'www.manufac.id') {
+    return `${protocol}//${hostname}/backend-api/api`
+  }
+  
+  // Development fallback
   return `${protocol}//${hostname}:${PORT_CONFIG.current.laravel}/api`
 }
 
@@ -88,10 +95,16 @@ export const getFlaskApiUrl = (): string => {
     return envUrl.replace(/\/+$/, '')
   }
   
-  // 2. Generate berdasarkan current environment
+  // 2. Deteksi production vs development
   const protocol = window.location.protocol
   const hostname = window.location.hostname || 'localhost'
   
+  // Production detection
+  if (hostname === 'manufac.id' || hostname === 'www.manufac.id') {
+    return `${protocol}//${hostname}/face-server`
+  }
+  
+  // Development fallback
   return `${protocol}//${hostname}:${PORT_CONFIG.current.flask}`
 }
 

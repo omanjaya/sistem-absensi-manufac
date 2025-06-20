@@ -20,6 +20,13 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
+        // Production domain
+        'https://manufac.id',
+        'https://www.manufac.id',
+        'http://manufac.id',
+        'http://www.manufac.id',
+
+        // Development domains
         'http://localhost:3000',
         'http://localhost:3001',
         'http://localhost:5173',

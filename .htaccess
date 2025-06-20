@@ -8,13 +8,23 @@
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
     
-    # API Routes - Forward to Laravel backend
+    # Backend API Routes - Forward to Laravel backend
+    RewriteCond %{REQUEST_URI} ^/backend-api/
+    RewriteRule ^backend-api/(.*)$ backend-api/public/$1 [L,QSA]
+    
+    # Face Recognition API Routes - Forward to Flask server  
+    RewriteCond %{REQUEST_URI} ^/face-server/
+    RewriteRule ^face-server/(.*)$ face-server/$1 [L,QSA]
+    
+    # Legacy API Routes (for backward compatibility)
     RewriteCond %{REQUEST_URI} ^/api/
-    RewriteRule ^api/(.*)$ api/public/$1 [L,QSA]
+    RewriteRule ^api/(.*)$ backend-api/public/api/$1 [L,QSA]
     
     # Vue.js SPA Routes - Everything else goes to index.html
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/backend-api/
+    RewriteCond %{REQUEST_URI} !^/face-server/
     RewriteCond %{REQUEST_URI} !^/api/
     RewriteRule ^.*$ /index.html [L]
     
