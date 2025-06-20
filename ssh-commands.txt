@@ -1,0 +1,57 @@
+# ========================================
+# SSH COMMANDS - Copy paste satu per satu
+# ========================================
+
+# 1. Navigate to directory
+cd /home/u976886556/domains/manufac.id/public_html
+
+# 2. Check current files
+ls -la
+
+# 3. Backup current state
+mkdir -p ../backup_manual_$(date +%H%M%S)
+cp -r . ../backup_manual_$(date +%H%M%S)/
+
+# 4. Clean development files
+rm -rf backend-api frontend-web face-server scripts vendor
+rm -f composer.* build.sh deploy*.* README.md package.json HOTFIX-403-MANUFAC.zip
+
+# 5. Create ROOT .htaccess (CRITICAL!)
+cat > .htaccess << 'EOF'
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteCond %{REQUEST_URI} ^/api/
+    RewriteRule ^api/(.*)$ api/public/$1 [L,QSA]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/api/
+    RewriteRule ^.*$ /index.html [L]
+</IfModule>
+EOF
+
+# 6. Create API .htaccess
+mkdir -p api
+cat > api/.htaccess << 'EOF'
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/api/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ public/index.php [L]
+</IfModule>
+EOF
+
+# 7. Set permissions
+chmod 644 .htaccess
+chmod 644 api/.htaccess
+find . -type f -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
+
+# 8. Check final structure
+ls -la
+
+# 9. Test website
+echo "✅ Test https://manufac.id sekarang!" 
